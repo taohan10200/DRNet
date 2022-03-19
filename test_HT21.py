@@ -29,16 +29,17 @@ parser.add_argument(
     '--SEED', type=int, default=3035,
     help='Directory where to write output frames (If None, no output)')
 parser.add_argument(
-    '--GPU_ID', type=str, default='1',
+    '--GPU_ID', type=str, default='0',
     help='Directory where to write output frames (If None, no output)')
+
 # parser.add_argument(
 #     '--model_path', type=str,
-#     default='./exp/HT21/11-07_01-55_HT21_VGG16_FPN_5e-05_(full model)/ep_5_iter_12500_mae_9.797_mse_10.438_seq_MAE_38.768_WRAE_44.561_MIAE_5.209_MOAE_5.535.pth',
+#     default='./model/pretrained_models/HT21.pth',
 #     help='pretrained weight path')
 
 parser.add_argument(
     '--model_path', type=str,
-    default='./exp/HT21/03-19_00-23_HT21_VGG16_FPN_5e-05/ep_8_iter_10000_mae_5.726_mse_6.703_seq_MAE_12.076_WRAE_13.723_MIAE_2.769_MOAE_5.869.pth',
+    default='./exp/HT21/03-19_12-02_HT21_VGG16_FPN_5e-05/ep_5_iter_12500_mae_27.324_mse_27.654_seq_MAE_40.081_WRAE_45.546_MIAE_3.113_MOAE_2.961.pth',
     help='pretrained weight path')
 
 

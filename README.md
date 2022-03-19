@@ -45,7 +45,7 @@ Check some parameters in ```config.py``` before training,
 * Use `__C.MAX_EPOCH = 20` to set the number of the training epochs (default:20).
 * Use `__C.EXP_PATH = os.path.join('./exp', __C.DATASET)` to set the dictionary for saving the code, weights, and resume point.
 
-Check other parameters (`TRAIN_BATCH_SIZE`, `TRAIN_SIZE` etc.) in the ```Root/DRNet/datasets/setting``` in case your GPU's memory is not support the default setting.
+Check other parameters (`TRAIN_BATCH_SIZE`, `TRAIN_SIZE` etc.) in the ```Root/DRNet/datasets/setting``` in case your GPU's memory is not support for the default setting.
 - run ```python train.py```.
 
  
@@ -56,11 +56,10 @@ To reproduce the performance, download the [pre-trained models](https://1drv.ms/
 - for HT21:  
   - Run ```python test_HT21.py```.
 - for SenseCrowd:  
-  -  ```model_path```.   
   - Run ```python test_SENSE.py```.
 Then the output file (```*_SENSE_cnt.py```) will be generated.
 ## Performance 
-The results (MAE, MSE, MRAE) and on HT21 and SenseCrowd.
+The results on HT21 and SenseCrowd.
 
 - HT21 dataset
 

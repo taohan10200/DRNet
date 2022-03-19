@@ -5,7 +5,7 @@ import torch
 from torch import optim
 import datasets
 from misc.utils import *
-from model.VIC import Video_Crowd_Counting
+from model.VIC import Video_Individual_Counter
 from tqdm import tqdm
 import torch.nn.functional as F
 from pathlib import Path
@@ -361,11 +361,9 @@ def save_visImg( kpts0, kpts1, matches, confidence, vi, last_frame, cur_frame, i
     ]
 
     def fig2data(fig):
-        fig.canvas.draw()
-        # 获取图像尺寸
+        fig.canvas.draw() # get image size
         w, h = fig.canvas.get_width_height()
-        print(fig.canvas.get_width_height())
-        # 获取 argb 图像
+        print(fig.canvas.get_width_height()) # get argb image
         buf = np.fromstring(fig.canvas.tostring_argb(), dtype=np.uint8)
         buf.shape = (w, h, 4)
 
@@ -377,7 +375,7 @@ def save_visImg( kpts0, kpts1, matches, confidence, vi, last_frame, cur_frame, i
         return  rgb_image
     fig, ax =plt.subplots(figsize = (16,10))
     ax.cla()  # clear plot
-    plt.tick_params(labelsize=28) #设置刻度字体
+    plt.tick_params(labelsize=28) #set the font on the axis
     plt.xlim(0, 130)
     plt.ylim(0, 1400)
 
