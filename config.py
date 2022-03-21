@@ -17,7 +17,7 @@ __C.PRE_VGG_MATCH_WEIGHTS = './exp/HT21/11-07_01-55_HT21_VGG16_FPN_5e-05_(full m
 __C.PRE_VGG_MATCH_WEIGHTS = './exp/SENSE/11-06_02-04_SENSE_VGG16_FPN_5e-05/ep_8_iter_132500_mae_2.796_mse_4.887_seq_MAE_5.873_WRAE_10.335_MIAE_1.789_MOAE_1.809.pth'
 __C.RESUME = False # continue training
 __C.RESUME_PATH = './exp/SENSE/11-23_04-55_SENSE_Res50_FPN_5e-05/latest_state.pth'
-__C.GPU_ID = '2,3'  # sigle gpu: '0'; multi gpus: '0,1'
+__C.GPU_ID = '0'  # sigle gpu: '0'; multi gpus: '0,1'
 
 __C.sinkhorn_iterations = 100
 __C.FEATURE_DIM = 256
@@ -25,7 +25,7 @@ __C.ROI_RADIUS = 4.
 if __C.DATASET == 'SENSE':
     __C.VAL_INTERVALS =15
 else:
-    __C.VAL_INTERVALS = 75
+    __C.VAL_INTERVALS = 50
 # learning rate settings
 __C.LR_Base = 5e-5  # learning rate
 __C.LR_Thre = 1e-2

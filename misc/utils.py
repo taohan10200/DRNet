@@ -116,7 +116,6 @@ def save_results_more(iter, exp_path, restore, img, pred_map, gt_map, binar_map,
             target.paste(img, (x, y, x + UNIT_W, y + UNIT_H))
             count+=1
 
-        # img = np.vstack([a,b])*255
         target.save(os.path.join(exp_path,'{}_den.jpg'.format(iter)))
         # cv2.imwrite('./exp/{}_vis_.png'.format(iter), img)
 

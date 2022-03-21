@@ -11,7 +11,7 @@ from pathlib import Path
 import argparse
 import matplotlib.cm as cm
 parser = argparse.ArgumentParser(
-    description='VCC test and demo',
+    description='VIC test and demo',
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument(
     '--DATASET', type=str, default='HT21',
@@ -32,15 +32,15 @@ parser.add_argument(
     '--GPU_ID', type=str, default='0',
     help='Directory where to write output frames (If None, no output)')
 
-# parser.add_argument(
-#     '--model_path', type=str,
-#     default='./model/pretrained_models/HT21.pth',
-#     help='pretrained weight path')
-
 parser.add_argument(
     '--model_path', type=str,
-    default='./exp/HT21/03-19_12-02_HT21_VGG16_FPN_5e-05/ep_5_iter_12500_mae_27.324_mse_27.654_seq_MAE_40.081_WRAE_45.546_MIAE_3.113_MOAE_2.961.pth',
-    help='pretrained weight path')
+    default='./model/pretrained_models/HT21.pth',
+     help='pretrained weight path')
+
+# parser.add_argument(
+#     '--model_path', type=str,
+#     default='./exp/HT21/03-20_01-30_HT21_VGG16_FPN_5e-05/ep_12_iter_30000_mae_11.691_mse_11.935_seq_MAE_1.068_WRAE_1.228_MIAE_1.477_MOAE_4.012.pth',
+#     help='pretrained weight path')
 
 
 opt = parser.parse_args()

@@ -121,8 +121,7 @@ class Trainer():
                 save_results_more(self.i_tb, self.exp_path, self.restore_transform, img[1].clone().unsqueeze(0), pre_map[1].detach().cpu().numpy(), \
                                   gt_map[1].detach().cpu().numpy(), pre_map[1].detach().cpu().numpy(),
                                   pre_map[1].detach().cpu().numpy(), pre_map[1].detach().cpu().numpy())
-            # import pdb
-            # pdb.set_trace()
+
             if self.i_tb % 2500 == 0:
                 self.timer['val time'].tic()
                 self.validate()
