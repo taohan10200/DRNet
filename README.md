@@ -18,7 +18,7 @@ This is the official PyTorch implementation of paper: **DR.VIC: Decomposition an
 - Install dependencies. We use python 3.7 and pytorch >= 1.6.0 : http://pytorch.org.
 
     ```bash
-    conda create -n DRNet
+    conda create -n DRNet python=3.7
     conda activate DRNet
     conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.2 -c pytorch
     cd ${DRNet}
