@@ -206,7 +206,7 @@ class Video_Individual_Counter(nn.Module):
 
         # =====extract the points of interest from the prediction density map======
         pre_data = local_maximum_points(pre_map,gaussian_maximun=self.gaussian_maximum,radius=self.radius)
-        count_in_pair=[(pre_data['points'][:, 0] == i).sum() for i in range(pre_map.size(0))]
+        count_in_pair=[(pre_data['points'][:, 0] == i).sum().cpu() for i in range(pre_map.size(0))]
         pre_points = torch.split(pre_data['points'], count_in_pair)
         print('predict_num:',count_in_pair)
 

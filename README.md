@@ -1,6 +1,6 @@
 # DRNet for  Video Indvidual Counting (CVPR 2022)
 ## Introduction
-This is the official PyTorch implementation of paper: **DR.VIC: Decomposition and Reasoning for Video Individual Counting**. Different from the single image counting methods, it counts the total number of the pedestrians in a video sequence with a person in different frames only being calculated once. DRNet decomposes this new task to estimate the initial crowd number in the first frame and integrate differential crowd numbers in a set of following image pairs (namely current frame and preceding frame). 
+This is the official PyTorch implementation of paper: [**DR.VIC: Decomposition and Reasoning for Video Individual Counting**](https://arxiv.org/abs/2203.12335). Different from the single image counting methods, it counts the total number of the pedestrians in a video sequence with a person in different frames only being calculated once. DRNet decomposes this new task to estimate the initial crowd number in the first frame and integrate differential crowd numbers in a set of following image pairs (namely current frame and preceding frame). 
 ![framework](./figures/framework1.png)
 
 # Catalog
@@ -77,7 +77,9 @@ The results on HT21 and SenseCrowd.
 | Paper:  VGG+FPN [2,3]| 12.3/24.7/12.7 |1.98/2.01 |4.1/8.0/23.3/50.0/77.0| 
 | This Repo's Reproduction:  VGG+FPN [2,3] |  TODO | TODO| TODO |
 
-
+# Video Demo
+Please visit [bilibili](https://www.bilibili.com/video/BV1cY411H7hr/) or [YouTube]() to watch the video demonstration.
+![demo](./figures/demo_screen1.png)
 # References
 1. Acquisition of Localization Confidence for Accurate Object Detection, ECCV, 2018.
 2. Very Deep Convolutional Networks for Large-scale Image Recognition, arXiv, 2014.
