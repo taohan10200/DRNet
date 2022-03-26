@@ -33,12 +33,18 @@ parser.add_argument(
     '--SEED', type=int, default=3035,
     help='Directory where to write output frames (If None, no output)')
 parser.add_argument(
-    '--GPU_ID', type=str, default='1',
+    '--GPU_ID', type=str, default='2',
     help='Directory where to write output frames (If None, no output)')
 
 parser.add_argument(
     '--model_path', type=str, default='./model/pretrained_models/SenseCrowd.pth',
     help='pretrained weight path')
+
+# parser.add_argument(
+#     '--model_path', type=str, default='./exp/SENSE/03-22_17-33_SENSE_VGG16_FPN_5e-05/ep_15_iter_115000_mae_2.211_mse_3.677_seq_MAE_6.439_WRAE_9.506_MIAE_1.447_MOAE_1.474.pth',
+#     help='pretrained weight path')
+
+
 
 opt = parser.parse_args()
 opt.output_dir = opt.output_dir+'_'+opt.DATASET

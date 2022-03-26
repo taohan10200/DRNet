@@ -75,7 +75,7 @@ The results on HT21 and SenseCrowd.
 |   Method   |  MAE/MSE/MRAE(%)|  MIAE/MOAE | D0~D4 (for MAE)  |
 |------------|---------|-------|-------|
 | Paper:  VGG+FPN [2,3]| 12.3/24.7/12.7 |1.98/2.01 |4.1/8.0/23.3/50.0/77.0| 
-| This Repo's Reproduction:  VGG+FPN [2,3] |  TODO | TODO| TODO |
+| This Repo's Reproduction:  VGG+FPN [2,3] |  11.7/24.6/11.7 | 1.99/1.88| 3.6/6.8/22.4/42.6/85.2 |
 
 # Video Demo
 Please visit [bilibili](https://www.bilibili.com/video/BV1cY411H7hr/) or [YouTube]() to watch the video demonstration.
