@@ -118,8 +118,7 @@ def test(cfg_data):
 
         scenes_pred_dict.append(pred_dict)
 
-    # import pdb
-    # pdb.set_trace()
+
     MAE,MSE, WRAE, crowdflow_cnt  = compute_metrics_all_scenes(scenes_pred_dict, gt_flow_cnt, intervals)
 
 

@@ -255,9 +255,8 @@ class Video_Individual_Counter(nn.Module):
 
         # =====extract the points of interest from the prediction density map======
         pre_data = local_maximum_points(pre_map,gaussian_maximun=self.gaussian_maximum,radius=self.radius)
-        count_in_pair=[(pre_data['points'][:, 0] == i).sum() for i in range(pre_map.size(0))]
+        count_in_pair=[(pre_data['points'][:, 0] == i).sum().cpu() for i in range(pre_map.size(0))]
         pre_points = torch.split(pre_data['points'], count_in_pair)
-        print('predict_num:',count_in_pair)
 
         if (np.array(count_in_pair) > 0).all():
             poi_features = prroi_pool2d(features, pre_data['rois'], 1, 1, self.feature_scale)
@@ -280,10 +279,6 @@ class Video_Individual_Counter(nn.Module):
             'matches1': indices1,  # use -1 for invalid match
             'matching_scores0': mscores0,
             'matching_scores1': mscores1,
-            # 'gt_matched': match_gt['a2b'],
-            #
-            # 'gt_outflow': len(match_gt['un_a']),
-            # 'gt_inflow': len(match_gt['un_b']),
 
             'pre_outflow':pre_outflow,
             'pre_inflow': pre_inflow,
