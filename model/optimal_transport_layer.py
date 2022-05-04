@@ -15,18 +15,13 @@ class Optimal_Transport_Layer(nn.Module):
     def forward(self,mdesc0, mdesc1, match_gt=None, ignore =False):
         # Compute matching descriptor distance.
         sim_matrix = torch.einsum('bdn,bdm->bnm', mdesc0, mdesc1)
-        # import pdb
-        # pdb.set_trace()
-        scores = sim_matrix / self.feature_dim ** .5
 
-        # import numpy as np
-        # np.save('cost_c', scores.detach().squeeze(0).cpu().numpy(), allow_pickle=True, fix_imports=True)
+        scores = sim_matrix / self.feature_dim ** .5
 
         # Run the optimal transport.
         scores = log_optimal_transport(
             scores, self.bin_score,
             iters=self.iters)
-        # print('assigned_matrix',scores,scores.size())
 
         # Get the matches with score above "match_threshold".
         max0 = scores[:, :-1, :-1].max(2)  # the points in a that have matched in b, return b's index,
@@ -44,25 +39,9 @@ class Optimal_Transport_Layer(nn.Module):
         indices0 = torch.where(valid0, indices0, indices0.new_tensor(-1))
         indices1 = torch.where(valid1, indices1, indices1.new_tensor(-1))
 
-        # print(indices0,indices1, mscores0, mscores1)
 
-        # scores_ = scores.clone().exp()
-        # scores_[0,-1,-1] = 0
-        # max0_ = scores_.max(2)  # the points in a that have matched in b, return b's index,
-        # max1_ = scores_.max(1)  # the points in b that have matched in b, return a's index
-        # indices0_, indices1_ = max0_.indices, max1_.indices
-        # mask0= (indices0_ == scores_.size(2)-1) [:,:-1]
-        # mask1 = (indices1_ == scores_.size(1) - 1) [:,:-1]
-        #
-        # # import pdb
-        # # pdb.set_trace()
-        # indices0[mask0] = -1
-        # indices1[mask1] = -1
-        # mscores0[mask0] = 0
-        # mscores1[mask1] = 0
         scores = scores.squeeze(0).exp()
-        # import numpy as np
-        # np.save('assign_P', scores.detach().cpu().numpy(), allow_pickle=True, fix_imports=True)
+
         if match_gt is not None:
             matched_mask = torch.zeros(scores.size()).long().to(scores)
 
@@ -85,8 +64,7 @@ def log_sinkhorn_iterations(Z, log_mu, log_nu, iters: int):
     for _ in range(iters):
         log_u = log_mu - torch.logsumexp(Z + log_v.unsqueeze(1), dim=2)
         log_v = log_nu - torch.logsumexp(Z + log_u.unsqueeze(2), dim=1)
-    # import pdb
-    # pdb.set_trace()
+
     return Z + log_u.unsqueeze(2) + log_v.unsqueeze(1)
 
 
@@ -102,8 +80,6 @@ def log_optimal_transport(scores, alpha, iters: int):
 
     couplings = torch.cat([torch.cat([scores, bins0], -1),
                            torch.cat([bins1, alpha], -1)], 1)
-    # import numpy as np
-    # np.save('cost_c_', couplings.detach().squeeze(0).cpu().numpy(), allow_pickle=True, fix_imports=True)
 
     norm = - (ms + ns).log() # normalization in the Log-space (log(1/(m+n)))
     log_mu = torch.cat([norm.expand(m), ns.log()[None] + norm])

@@ -84,8 +84,7 @@ class RandomVerticallyFlip(object):
     def __call__(self, img, mask, flow=None, bbx=None):
         if random.random() < 0.5:
             if bbx is None:
-                # for i in range(3):
-                # flow[:,:,i] = np.flipud(flow[:,:,i])
+
                 return img.transpose(Image.FLIP_TOP_BOTTOM), mask.transpose(Image.FLIP_TOP_BOTTOM)
             w, h = img.size
             ymin = w - bbx[:, 2]
@@ -153,7 +152,6 @@ class ScaleByRateWithMin(object):
         new_h = self.min_h
         img = img.resize((new_w, new_h), Image.ANTIALIAS)
 
-        # gt[0] = gt[0].resize((new_w, new_h), Image.BILINEAR)  # Image.NEAREST)
         rate = new_w / w
         gt['points'] =  gt['points']  * rate #cv2.resize(gt[1], (new_w, new_h), interpolation=cv2.INTER_NEAREST)
         gt['sigma']  =  gt['sigma']  * rate
@@ -179,8 +177,7 @@ class RandomCrop(object):
         self.padding = padding
 
     def __call__(self, img, gt, crop_left, crop_size ):
-        # if self.padding > 0:
-        #     img = ImageOps.expand(img, border=self.padding, fill=0)
+
         th, tw = crop_size[0], crop_size[1]
         x1,y1 = crop_left
         img = img.crop((x1, y1, x1 + tw, y1 + th))
@@ -191,7 +188,7 @@ class RandomCrop(object):
 
         gt['person_id'] =  gt['person_id'][index] #gt[1][y1:y1 + th, x1:x1 + tw]
         gt['sigma'] = gt['sigma'][index]
-        # print( len(gt['points']))
+
         return img, gt
 
 class FreeScale(object):

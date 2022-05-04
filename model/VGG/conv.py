@@ -1,13 +1,8 @@
 import torch.nn as nn
 import torch.nn.functional as F
-from .conv_ws import ConvWS2d, ConvAWS2d
-
-
 
 conv_cfg = {
     'Conv': nn.Conv2d,
-    'ConvWS': ConvWS2d,
-    'ConvAWS': ConvAWS2d,
     # TODO: octave conv
 }
 

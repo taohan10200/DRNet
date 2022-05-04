@@ -38,12 +38,9 @@ class get_ROI_and_MatchInfo(object):
         pois = torch.cat([roi_a, roi_b], dim=0)
 
         # ===================match the id for the prediction points of two adhesive frame===================
-        # import pdb
-        # pdb.set_trace()
+
         a_ids = target_a['person_id']
         b_ids = target_b['person_id']
-        # import numpy as np
-        # np.save('id', {'id1':a_ids.detach().cpu().numpy(), 'id2':b_ids.detach().cpu().numpy()}, allow_pickle=True, fix_imports=True)
 
         dis = a_ids.unsqueeze(1).expand(-1,len(b_ids)) - b_ids.unsqueeze(0).expand(len(a_ids),-1)
         dis = dis.abs()
@@ -53,11 +50,8 @@ class get_ROI_and_MatchInfo(object):
         unmatched1 = torch.where(dis.min(0)[0]>0)[0]
 
         match_gt={'a2b': matched_a2b, 'un_a':unmatched0, 'un_b':unmatched1}
-        # import pdb
-        # pdb.set_trace()
-        # poi_a = ((gt_a + torch.randn(gt_a.size()).to(device))* self.feature_scale).long()
-        # poi_b = (gt_b* self.feature_scale).long()
-        return  match_gt, pois #,poi_a, poi_b
+
+        return  match_gt, pois
 
 
 def local_maximum_points(sub_pre, gaussian_maximun,radius=8.):
@@ -67,7 +61,6 @@ def local_maximum_points(sub_pre, gaussian_maximun,radius=8.):
     kernel =kernel.unsqueeze(0).unsqueeze(0).cuda()
     weight = nn.Parameter(data=kernel, requires_grad=False)
     sub_pre = F.conv2d(sub_pre, weight, stride=1, padding=1)
-    # max_value = torch.max(sub_pre)
 
     keep = F.max_pool2d(sub_pre, (5, 5), stride=2, padding=2)
     keep = F.interpolate(keep, scale_factor=2)
@@ -77,8 +70,7 @@ def local_maximum_points(sub_pre, gaussian_maximun,radius=8.):
     sub_pre[sub_pre < 0.25*gaussian_maximun] = 0
     sub_pre[sub_pre > 0] = 1
     count = int(torch.sum(sub_pre).item())
-    # import pdb
-    # pdb.set_trace()
+
     points = torch.nonzero(sub_pre)[:,[0,1,3,2]].float() # b,c,h,w->b,c,w,h
     rois = torch.zeros((points.size(0), 5)).float().to(sub_pre)
     rois[:, 0] = points[:, 0]
@@ -87,19 +79,5 @@ def local_maximum_points(sub_pre, gaussian_maximun,radius=8.):
     rois[:, 3] = torch.clamp(points[:, 2] + radius, max=w)
     rois[:, 4] = torch.clamp(points[:, 3] + radius, max=h)
 
-    # kpoint = sub_pre.data.cpu().numpy()
-    # points = np.array(list(zip(np.nonzero(kpoint)[1], np.nonzero(kpoint)[0]))).astype(np.float32)
-    # distance_map = cv2.distanceTransform(sub_bin, cv2.DIST_L1,3)
-
-    # boxes = np.zeros((len(points), 5)).astype(np.float32)
-    # for i in range(len(points)):
-    #     x, y = points[i]
-    #     length =  scale_factor # max(distance_map[int(y), int(x)], scale_factor)
-    #     boxes[i] = [x - length, y - length, 2*length, 2*length, 4*length*length]
-    #
-    # pre_data = {'num': count, 'points': points, 'boxes': boxes}
-    # points = torch.zeros((points.size(0),points.size(2), 2)).float()
-    # points[:,:, 0] = points[:, 3]
-    # points[:,:, 0] = points[:, 2]
     pre_data = {'num': count, 'points': points, 'rois': rois}
     return pre_data

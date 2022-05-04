@@ -51,9 +51,7 @@ class CategoriesSampler():
                 assert self.scenes[c] == self.scenes[pair_c]
                 batch.append(torch.tensor([c, pair_c]))
 
-            # batch = torch.stack(batch).t().reshape(-1)
             batch = torch.stack(batch).reshape(-1)
-            # print('sam-batch', batch)
             yield batch
 
 
@@ -96,6 +94,5 @@ class Val_CategoriesSampler():
                 batch.append(torch.tensor([c, pair_c]))
 
             batch = torch.stack(batch).t().reshape(-1)
-            # batch = torch.stack(batch).reshape(-1)
-            # print('sam-batch', batch)
+
             yield batch

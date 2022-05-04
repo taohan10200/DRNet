@@ -160,19 +160,6 @@ def createTrainData(datasetname, Dataset, cfg_data):
         standard_transforms.Normalize(*cfg_data.MEAN_STD)
     ])
 
-    if datasetname=='NWPU':
-        main_transform = train_pair_transform(cfg_data, check_dim = False)
-        train_set = Dataset(cfg_data.TRAIN_LST,
-                            cfg_data.DATA_PATH,
-                            main_transform=main_transform,
-                            img_transform=img_transform,
-                            train=True,
-                            datasetname=datasetname)
-        train_loader = DataLoader(train_set, batch_size=cfg_data.TRAIN_BATCH_SIZE, shuffle=True,
-                                  collate_fn=nwpu_collate_fn,num_workers=8, pin_memory=True,drop_last=True)
-
-        return  train_loader
-
     main_transform = train_pair_transform(cfg_data)
     train_set =Dataset(cfg_data.TRAIN_LST,
                                     cfg_data.DATA_PATH,
@@ -222,8 +209,6 @@ def loading_data(datasetname,val_interval):
     Dataset = dataset.Dataset
     train_loader = createTrainData(datasetname, Dataset, cfg_data)
     restore_transform = createRestore(cfg_data.MEAN_STD)
-    if datasetname == "NWPU":
-        return  train_loader, None, restore_transform
 
     Dataset = dataset.TestDataset
     val_loader = createValTestData(datasetname, Dataset, cfg_data,val_interval, mode ='val')

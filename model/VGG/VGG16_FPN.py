@@ -5,7 +5,7 @@ from misc.utils import *
 from misc.layer import *
 from torchsummary import summary
 from model.necks import FPN
-from model.ops.conv import ResBlock
+from .conv import ResBlock
 
 BatchNorm2d = nn.BatchNorm2d
 BN_MOMENTUM = 0.01
@@ -25,10 +25,6 @@ class VGG16_FPN(nn.Module):
         self.neck = FPN(in_channels,192,len(in_channels))
         self.neck2f = FPN(in_channels, 128, len(in_channels))
         self.loc_head = nn.Sequential(
-            # nn.Conv2d(768, 512, kernel_size=3, stride=1, padding=1, bias=False),
-            # nn.Dropout2d(0),
-            # BatchNorm2d(512, momentum=BN_MOMENTUM),
-            # nn.ReLU(inplace=True),
             nn.Dropout2d(0.2),
             ResBlock(in_dim=576, out_dim=256, dilation=0, norm="bn"),
             ResBlock(in_dim=256, out_dim=128, dilation=0, norm="bn"),
@@ -56,13 +52,8 @@ class VGG16_FPN(nn.Module):
             nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1, bias=False),
             BatchNorm2d(256, momentum=BN_MOMENTUM),
             nn.ReLU(inplace=True),
-
-            nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1),
-
-
+            nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1)
         )
-        # initialize_weights(self.loc_layer)
-        # initialize_weights(self.scale_layer)
     def forward(self, x):
         f_list = []
         x = self.layer1(x)
@@ -87,9 +78,3 @@ class VGG16_FPN(nn.Module):
 
 
 
-if __name__ == "__main__":
-    net = VGG16_FPN(pretrained=False).cuda()
-    # net(torch.rand(1,3,128,128).cuda(2))
-    print(net)
-    summary(net,(3,64 ,64 ),batch_size=4)
-    # net(torch.rand(1,3,64,64).cuda())

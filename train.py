@@ -63,8 +63,6 @@ class Trainer():
         for i, data in enumerate(self.train_loader, 0):
             self.timer['iter time'].tic()
             self.i_tb += 1
-            # import pdb
-            # pdb.set_trace()
             img, label = data
 
             pre_map, gt_map, correct_pairs_cnt,match_pairs_cnt, TP, matched_results = self.net(img, label)
@@ -82,7 +80,7 @@ class Trainer():
             weight = -(1-weight) * torch.log(weight+1e-8)
             self.weight = weight/weight.sum()
 
-            all_loss = (self.weight*loss).sum() #w_den*matching_loss + w_match*counting_mse_loss# + reg_loss  #0+0.001*norm_loss
+            all_loss = (self.weight*loss).sum()
 
             self.optimizer.zero_grad()
             all_loss.backward()
@@ -106,8 +104,7 @@ class Trainer():
                       (gt_cnt.item(), pre_cnt.item(),pre_map.max().item()*cfg_data.DEN_FACTOR, gt_map.max().item()*cfg_data.DEN_FACTOR,\
                         torch.cat(matched_results['gt_matched']).size(0),TP,
                         matched_results['gt_count_diff'], matched_results['pre_count_diff']  ))
-                print(self.net.Matching_Layer.bin_score)
-            if (self.i_tb) % 60 == 0:
+            if (self.i_tb) % 400 == 0:
                 kpts0 = label[0]['points'].cpu().numpy()  # h,w-> w,h
                 kpts1 = label[1]['points'].cpu().numpy()  # h,w-> w,h
                 id0 = label[0]['person_id'].cpu().numpy()
@@ -234,7 +231,7 @@ def save_visImg(kpts0,kpts1,matches,confidence,vi, last_frame, cur_frame,interva
         path=None, show_keypoints=True, small_text=small_text, restore_transform=restore_transform,
         id0=id0, id1=id1)
     if save_path is not None:
-        # print('==> Will write outputs to {}'.format(save_path))
+
         Path(save_path).mkdir(exist_ok=True)
 
         stem = '{}_{}_{}_matches'.format(scene_id, vi , vi+ intervals)
@@ -267,8 +264,7 @@ def compute_metrics_all_scenes(scenes_pred_dict, scene_gt_dict, intervals):
     metrics = {'MAE':torch.zeros(scene_cnt,2), 'WRAE':torch.zeros(scene_cnt,2), 'MIAE':torch.zeros(0), 'MOAE':torch.zeros(0)}
     for i,(pre_dict, gt_dict) in enumerate( zip(scenes_pred_dict, scene_gt_dict),0):
         time = pre_dict['time']
-        # import pdb
-        # pdb.set_trace()
+
         pre_crowdflow_cnt, gt_crowdflow_cnt, inflow_cnt, outflow_cnt=\
             compute_metrics_single_scene(pre_dict, gt_dict,intervals)
         mae = np.abs(pre_crowdflow_cnt-gt_crowdflow_cnt)

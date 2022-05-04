@@ -130,7 +130,7 @@ class Video_Individual_Counter(nn.Module):
                 if len(a_ids_)>0:
 
                     pre_target_a.update({'person_id': a_ids_})
-                    # print(pre_target_a,target[pair_idx * 2 ])
+
                     match_gt_a, pois = self.get_ROI_and_MatchInfo(pre_target_a, target[pair_idx * 2 + 1], noise='b')
 
                     pois = pois[pois[:,0]==0].view(-1,5)
@@ -141,15 +141,12 @@ class Video_Individual_Counter(nn.Module):
                         self.Matching_Layer(mdesc0_, mdesc1, match_gt_a,ignore=True)  # batch,dim,num
                     match_loss_, hard_loss_ = self.Matching_Layer.loss
                     match_loss.append(match_loss_)
-                    # hard_loss.append(hard_loss_)
 
                 pre_target_b = {'points': pre_points[pair_idx * 2 + 1][:, 2:4]}
                 tp_pred_index_b, tp_gt_index_b = associate_pred2gt_point(pre_target_b, target[pair_idx * 2+1])
                 b_ids_ = target[pair_idx * 2+1]['person_id'][tp_gt_index_b] if len(tp_gt_index_b) else []
                 pre_target_b['points'] = pre_target_b['points'][tp_pred_index_b]
                 if len(b_ids_)>0:
-                    # import  pdb
-                    # pdb.set_trace()
                     pre_target_b.update({'person_id': b_ids_})
                     match_gt_b, pois = self.get_ROI_and_MatchInfo( target[pair_idx * 2], pre_target_b, noise='a')
 
@@ -157,12 +154,10 @@ class Video_Individual_Counter(nn.Module):
                     mdesc1_ = prroi_pool2d(features[pair_idx * 2:pair_idx * 2 + 2], pois, 1, 1, self.feature_scale)
                     mdesc1_ = mdesc1_.squeeze(2).squeeze(2)[None].transpose(1, 2)  # [batch, dim, num_features]
 
-                    # Compute matching descriptor distance.
                     scores_, indices0_, indices1_, mscores0_, mscores1_ = \
                         self.Matching_Layer(mdesc0, mdesc1_, match_gt_b,ignore=True)  # batch,dim,num
                     match_loss_, hard_loss_ = self.Matching_Layer.loss
                     match_loss.append(match_loss_)
-                    # hard_loss.append(hard_loss_)
             else:
                 indices0 = torch.zeros(count_in_pair[0]).fill_(-1).to(self.device)
                 indices1 = torch.zeros(count_in_pair[1]).fill_(-1).to(self.device)
@@ -180,7 +175,6 @@ class Video_Individual_Counter(nn.Module):
             matched_results['pre_count_diff'] += pre_map[pair_idx * 2 + 1].sum() - (indices1 > -1).sum()
 
         if len(match_loss)>0:
-            # print(torch.cat(match_loss).size())
             self.batch_match_loss =  torch.mean(torch.cat(match_loss))
         if len(hard_loss)>0:
             self.batch_hard_loss = torch.mean(torch.cat(hard_loss))
