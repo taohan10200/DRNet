@@ -92,8 +92,8 @@ def CroHead():
             cv2.imwrite(save_path,img)
             # cv2.waitKey()
 
-video_path = '/data/GJY/ht/CVPR2022/dataset/SENSE/video_ori'
-label_path = '/data/GJY/ht/CVPR2022/dataset/SENSE/label_list_all_rmInvalid'
+video_path = 'E:/netdisk\SenseCrowd/video_ori'
+label_path = 'E:/netdisk\SenseCrowd/label_list_all_rmInvalid'
 import json
 import os
 from numpy import array
@@ -102,8 +102,8 @@ import pylab as pl
 def SensorCrowd():
     Info_dict={}
     time = 0
-    for scene in sorted(os.listdir(video_path)):
-        print(len(scene))
+    for scene in sorted(os.listdir(video_path)[51:]):
+        print(scene)
         gts = defaultdict(list)
         with open(os.path.join(label_path,scene+'.txt')) as f:
             lines = f.readlines()
@@ -116,6 +116,7 @@ def SensorCrowd():
 
         root  = osp.join(video_path, scene)
         img_ids = os.listdir(root)
+        print(img_ids)
         id_list = []
         for img_id in img_ids:
             if not img_id.endswith("jpg"):
@@ -130,10 +131,11 @@ def SensorCrowd():
 
             id_list.append(ids)
 
-            # img = cv2.imread(img_path)
-            # plot_img = plot_boxes(img, boxes, points, ids)
-            # cv2.imshow(img_id, plot_img)
-            # cv2.waitKey()
+            img = cv2.imread(img_path)
+            print(img_path)
+            plot_img = plot_boxes(img, boxes, points, ids)
+            cv2.imshow(img_id, plot_img)
+            cv2.waitKey()
         all_id = np.concatenate(id_list)
         Info_dict.update({scene:len(set(all_id))})
 
@@ -222,6 +224,6 @@ def draw_hist(lenths):
 
 
 if __name__ =='__main__':
-    # SensorCrowd()
+    SensorCrowd()
     Infor_statistics()
     # SENSE_train_val_test()
