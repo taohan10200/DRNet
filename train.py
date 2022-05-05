@@ -306,9 +306,6 @@ if __name__=='__main__':
     datasetting = import_module(f'datasets.setting.{data_mode}')
     cfg_data = datasetting.cfg_data
 
-    # ------------Prepare Trainer------------
-    # from trainer import Trainer
-
     # ------------Start Training------------
     pwd = os.path.split(os.path.realpath(__file__))[0]
     cc_trainer = Trainer(cfg_data, pwd)
