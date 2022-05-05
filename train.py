@@ -313,3 +313,4 @@ if __name__=='__main__':
     pwd = os.path.split(os.path.realpath(__file__))[0]
     cc_trainer = Trainer(cfg_data, pwd)
     cc_trainer.forward()
+
