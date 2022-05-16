@@ -54,7 +54,7 @@ Check other parameters (`TRAIN_BATCH_SIZE`, `TRAIN_SIZE` etc.) in the ```Root/DR
 Tips: The training process takes **~10 hours** on HT21 dataset with **one TITAN RTX (24GB Memory)**. 
 
 ## Testing
-To reproduce the performance, download the pre-trained models from [onedrive](https://1drv.ms/u/s!AgKz_E1uf260nWeqa86-o9FMIqMt?e=0scDuw) or [badu disk](链接：https://pan.baidu.com/s/1cMB4p-Z-55t4DEdjfz18zg?pwd=aacv) and then place  ```pretrained_models``` folder to ```Root/DRNet/model/``` 
+To reproduce the performance, download the pre-trained models from [onedrive](https://1drv.ms/u/s!AgKz_E1uf260nWeqa86-o9FMIqMt?e=0scDuw) or [badu disk](https://pan.baidu.com/s/1cMB4p-Z-55t4DEdjfz18zg?pwd=aacv) and then place  ```pretrained_models``` folder to ```Root/DRNet/model/``` 
 - for HT21:                                                    
   - Run ```python test_HT21.py```.
 - for SenseCrowd:  
