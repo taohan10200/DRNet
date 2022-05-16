@@ -56,7 +56,7 @@ class train_pair_transform(object):
             if self.check_dim:
                 x1 = max(0, int(self.last_crop_left[0] + (self.last_cw_ch[0]-self.c_w)))
                 y1 = max(0, int(self.last_crop_left[1] + (self.last_cw_ch[1]-self.c_h)))
-            else:   # for pre_training on NWPU
+            else:   # for pre_training on other dataset
                 x1 = random.randint(0, w - self.c_w)
                 y1 = random.randint(0, h - self.c_h)
         self.crop_left = (x1, y1)
@@ -79,81 +79,6 @@ def collate_fn(batch):
     #     import pdb;pdb.set_trace()
     return tuple(zip(*batch))
 
-def nwpu_collate_fn(batch):
-    batch = list(filter(lambda x: x is not None, batch))
-    # import pdb
-    # pdb.set_trace()
-    new_batch=[]
-    for i in range(len(batch)//2):
-        
-        img_a, target_a = batch[i*2]
-        img_b, target_b = batch[i * 2 +1]
-        
-        c, h, w = img_a.size()
-        mask = torch.rand(1, h // 128, w // 128).round().unsqueeze(0)
-        mask = F.interpolate(mask, size=(h, w)).long().squeeze(0).expand(3,-1,-1)
-
-        cnt_a = len(target_a['person_id'])
-        cnt_b = len(target_b['person_id'])
-        if cnt_a == cnt_b == 0:
-            new_batch.append((img_a, target_a))
-            new_batch.append((img_b, target_b))
-        else:
-            if cnt_a> cnt_b:
-                img_b = img_b*(1-mask)+img_a*(mask)
-                points_a = target_a['points'].long()
-                ids_a = target_a['person_id']
-                sigma_a = target_a['sigma']
-
-                points_b = target_b['points'].long()
-                ids_b = target_b['person_id']+torch.max(ids_a)
-                sigma_b = target_b['sigma']
-
-                idx_a = mask[0, points_a[:,1], points_a[:,0]] == 1
-                idx_b = mask[0, points_b[:,1], points_b[:,0]] == 0
-
-                points_b = points_b[idx_b]
-                ids_b = ids_b[idx_b]
-                sigma_b = sigma_b[idx_b]
-
-                points_b = torch.cat([points_b, points_a[idx_a]])
-                ids_b = torch.cat([ids_b, ids_a[idx_a]])
-                sigma_b = torch.cat([sigma_b, sigma_a[idx_a]])
-
-                target_b['person_id'] = ids_b
-                target_b['points'] = points_b
-                target_b['sigma'] = sigma_b
-                new_batch.append((img_a,target_a))
-                new_batch.append((img_b,target_b))
-
-            else:
-                img_a = img_a * (1 - mask) + img_b * (mask)
-                points_b = target_b['points'].long()
-                ids_b = target_b['person_id']
-                sigma_b = target_b['sigma']
-
-                points_a = target_a['points'].long()
-                ids_a = target_a['person_id']+torch.max(ids_b)
-                sigma_a = target_a['sigma']
-
-                idx_a = mask[0,points_a[:,1],points_a[:,0]] == 0
-                idx_b = mask[0, points_b[:,1], points_b[:,0]] == 1
-
-                points_a = points_a[idx_a]
-                ids_a = ids_a[idx_a]
-                sigma_a = sigma_a[idx_a]
-
-                points_a = torch.cat([points_a, points_b[idx_b]])
-                ids_a = torch.cat([ids_a, ids_b[idx_b]])
-                sigma_a = torch.cat([sigma_a, sigma_b[idx_b]])
-
-                target_a['person_id'] = ids_a
-                target_a['points'] = points_a
-                target_a['sigma'] = sigma_a
-                new_batch.append((img_a,target_a))
-                new_batch.append((img_b,target_b))
-
-    return tuple(zip(*new_batch))
 def createTrainData(datasetname, Dataset, cfg_data):
     img_transform = standard_transforms.Compose([
         standard_transforms.ToTensor(),

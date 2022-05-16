@@ -28,8 +28,7 @@ class Video_Individual_Counter(nn.Module):
         else:
             raise  Exception("The backbone is out of setting, Please chose HR_Net or VGG16_FPN")
 
-        # import pdb
-        # pdb.set_trace()
+
         if len(cfg.GPU_ID) >=1:
             self.Extractor = torch.nn.DataParallel(self.Extractor).cuda()
 

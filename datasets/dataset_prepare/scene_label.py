@@ -41,4 +41,3 @@ for i in lines:
 with open(osp.join(root,'scene_label.txt'), 'w') as f:
 
     f.writelines(new_lines)
-    # print(i, scene_name,cnt)

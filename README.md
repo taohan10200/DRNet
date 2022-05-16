@@ -35,11 +35,11 @@ This is the official PyTorch implementation of paper: [**DR.VIC: Decomposition a
             sudo unzip ninja-linux.zip -d /usr/local/bin/
             sudo update-alternatives --install /usr/bin/ninja ninja /usr/local/bin/ninja 1 --force 
             ```
-      2. If you encounter errors when compiling the PreciseRoIPooling, you can look up the original repo's [issues](https://github.com/vacancy/PreciseRoIPooling/issues) for help.
+      2. If you encounter errors when compiling the PreciseRoIPooling, you can look up the original repo's [issues](https://github.com/vacancy/PreciseRoIPooling/issues) for help. One solution to the most common errors can be found in this [blog](https://blog.csdn.net/weixin_42098198/article/details/124756432?spm=1001.2014.3001.5502).
 - Datasets 
    - **HT21** dataset: Download CroHD dataset from this [link](https://motchallenge.net/data/Head_Tracking_21/). Unzip ```HT21.zip``` and place ``` HT21``` into the folder (```Root/dataset/```). 
    - **SenseCrowd** dataset: To be updated when it is released.
-   - Download the lists of `train/val/test` sets at [link: dataset.](https://1drv.ms/u/s!AgKz_E1uf260nWeqa86-o9FMIqMt?e=0scDuw), and place them to each dataset folder, respectively.   
+   - Download the lists of `train/val/test` sets at [link1](https://1drv.ms/u/s!AgKz_E1uf260nWeqa86-o9FMIqMt?e=0scDuw) or [link2](https://pan.baidu.com/s/1cMB4p-Z-55t4DEdjfz18zg?pwd=aacv), and place them to each dataset folder, respectively.   
 ## Training
 Check some parameters in ```config.py``` before training,
 * Use `__C.DATASET = 'HT21'` to set the dataset (default: `HT21`).
@@ -54,7 +54,7 @@ Check other parameters (`TRAIN_BATCH_SIZE`, `TRAIN_SIZE` etc.) in the ```Root/DR
 Tips: The training process takes **~10 hours** on HT21 dataset with **one TITAN RTX (24GB Memory)**. 
 
 ## Testing
-To reproduce the performance, download the [pre-trained models](https://1drv.ms/u/s!AgKz_E1uf260nWeqa86-o9FMIqMt?e=0scDuw) and then place  ```pretrained_models``` folder to ```Root/DRNet/model/``` 
+To reproduce the performance, download the pre-trained models from [onedrive](https://1drv.ms/u/s!AgKz_E1uf260nWeqa86-o9FMIqMt?e=0scDuw) or [badu disk](链接：https://pan.baidu.com/s/1cMB4p-Z-55t4DEdjfz18zg?pwd=aacv) and then place  ```pretrained_models``` folder to ```Root/DRNet/model/``` 
 - for HT21:                                                    
   - Run ```python test_HT21.py```.
 - for SenseCrowd:  

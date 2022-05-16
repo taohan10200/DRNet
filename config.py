@@ -14,7 +14,7 @@ __C.NET = 'VGG16_FPN'     # 'VGG16_FPN'
 
 __C.RESUME = False # continue training
 __C.RESUME_PATH = './exp/SENSE/11-23_04-55_SENSE_Res50_FPN_5e-05/latest_state.pth'
-__C.GPU_ID = '0,1'  # sigle gpu: '0'; multi gpus: '0,1'
+__C.GPU_ID = '0'  # sigle gpu: '0'; multi gpus: '0,1'
 
 __C.sinkhorn_iterations = 100
 __C.FEATURE_DIM = 256
