@@ -39,7 +39,7 @@ This is the official PyTorch implementation of paper: [**DR.VIC: Decomposition a
 - Datasets 
    - **HT21** dataset: Download CroHD dataset from this [link](https://motchallenge.net/data/Head_Tracking_21/). Unzip ```HT21.zip``` and place ``` HT21``` into the folder (```Root/dataset/```). 
    - **SenseCrowd** dataset: To be updated when it is released.
-   - Download the lists of `train/val/test` sets at [link1](https://1drv.ms/u/s!AgKz_E1uf260nWeqa86-o9FMIqMt?e=0scDuw) or [link2](https://pan.baidu.com/s/1cMB4p-Z-55t4DEdjfz18zg?pwd=aacv), and place them to each dataset folder, respectively.   
+   - Download the lists of `train/val/test` sets at [link1](https://1drv.ms/u/s!AgKz_E1uf260nWeqa86-o9FMIqMt?e=0scDuw) or [link2](https://pan.baidu.com/s/13X3-egn0fYSd6NUTxB4cuw?pwd=ew8f), and place them to each dataset folder, respectively.   
 ## Training
 Check some parameters in ```config.py``` before training,
 * Use `__C.DATASET = 'HT21'` to set the dataset (default: `HT21`).
