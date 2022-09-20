@@ -8,7 +8,7 @@ This is the official PyTorch implementation of paper: [**DR.VIC: Decomposition a
 - [x] PyTorch pretrained models (2022.3.19)
 - [x] Training Code 
   - [x] HT21 
-  - [x] SenseCrowd (2022.9.30
+  - [x] SenseCrowd (2022.9.30)
 
 # Getting started 
 
