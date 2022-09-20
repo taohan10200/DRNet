@@ -8,7 +8,7 @@ This is the official PyTorch implementation of paper: [**DR.VIC: Decomposition a
 - [x] PyTorch pretrained models (2022.3.19)
 - [x] Training Code 
   - [x] HT21 
-  - [ ] SenseCrowd
+  - [x] SenseCrowd (2022.9.30
 
 # Getting started 
 
@@ -38,7 +38,7 @@ This is the official PyTorch implementation of paper: [**DR.VIC: Decomposition a
       2. If you encounter errors when compiling the PreciseRoIPooling, you can look up the original repo's [issues](https://github.com/vacancy/PreciseRoIPooling/issues) for help. One solution to the most common errors can be found in this [blog](https://blog.csdn.net/weixin_42098198/article/details/124756432?spm=1001.2014.3001.5502).
 - Datasets 
    - **HT21** dataset: Download CroHD dataset from this [link](https://motchallenge.net/data/Head_Tracking_21/). Unzip ```HT21.zip``` and place ``` HT21``` into the folder (```Root/dataset/```). 
-   - **SenseCrowd** dataset: To be updated when it is released.
+   - **SenseCrowd** dataset: Download the dataset from [Baidu disk](https://pan.baidu.com/s/1dZKvMLZ58ekFhPcKPTK4pQ?pwd=48oi) or from the original dataset [link](https://github.com/HopLee6/VSCrowd-Dataset). 
    - Download the lists of `train/val/test` sets at [link1](https://1drv.ms/u/s!AgKz_E1uf260nWeqa86-o9FMIqMt?e=0scDuw) or [link2](https://pan.baidu.com/s/13X3-egn0fYSd6NUTxB4cuw?pwd=ew8f), and place them to each dataset folder, respectively.   
 ## Training
 Check some parameters in ```config.py``` before training,
