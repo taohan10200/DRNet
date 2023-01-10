@@ -82,7 +82,7 @@ def test(cfg_data):
                             collate_fn=collate_fn, num_workers=0, pin_memory=True)
     restore_transform = createRestore(cfg_data.MEAN_STD)
 
-    net = Video_Crowd_Counting(cfg, cfg_data)
+    net = Video_Individual_Counter(cfg, cfg_data)
 
     # latest_state = torch.load(cfg.RESUME_PATH)
     # net.load_state_dict(latest_state['net'], strict=True)
